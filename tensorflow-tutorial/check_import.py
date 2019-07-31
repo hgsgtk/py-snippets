@@ -23,15 +23,15 @@ class_names = [
     'Ankle boot'
 ]
 
-print(train_images.shape)  # (60000, 28, 28) 60000枚 28px 28px
-print(train_labels)  # [9 0 0 ... 3 0 5]
-print(len(train_labels))  # 60000
+train_images = train_images / 255.0
+test_images = test_images / 255.0
 
-print(test_images.shape)  # (10000, 28, 28)
-print(len(test_labels))
-
-plt.figure()
-plt.imshow(train_images[0])
-plt.colorbar()
-plt.gca().grid(False)
+plt.figure(figsize=(10, 10))
+for i in range(25):
+    plt.subplot(5, 5, i+1)
+    plt.xticks([])
+    plt.yticks([])
+    plt.grid(False)
+    plt.imshow(train_images[i], cmap=plt.cm.binary)
+    plt.xlabel(class_names[train_labels[i]])
 plt.show()
