@@ -1,3 +1,7 @@
+"""
+Ref: https://www.tensorflow.org/tutorials/keras/basic_classification
+"""
+
 from __future__ import absolute_import, division, print_function, unicode_literals
 
 import tensorflow as tf
@@ -38,32 +42,10 @@ model.compile(optimizer=tf.keras.optimizers.Adam(),
               )
 model.fit(train_images, train_labels, epochs=5)
 
-test_loss, test_acc = model.evaluate(test_images, test_labels)
-print('Test accuracy:', test_acc)
+img = test_images[0]
+img = (np.expand_dims(img, 0))
 
-predictions = model.predict(test_images)
-print(predictions[0])
-print(np.argmax(predictions[0]))
-print(test_labels[0])
-
-
-def plot_image(i, predictions_array, true_label, img):
-    predictions_array, true_label, img = predictions_array[i], true_label[i], img[i]
-    plt.grid(False)
-    plt.xticks([])
-    plt.yticks([])
-
-    plt.imshow(img, cmap=plt.cm.binary)
-
-    predicted_label = np.argmax(predictions_array)
-    if predicted_label == true_label:
-        color = 'blue'
-    else:
-        color = 'red'
-
-    plt.xlabel("{} {:2.0f}% ({})".format(class_names[predicted_label],
-                                         100 * np.max(predictions_array),
-                                         class_names[true_label]), color=color)
+predictions_single = model.predict(img)
 
 
 def plot_value_array(i, predictions_array, true_label):
@@ -79,13 +61,6 @@ def plot_value_array(i, predictions_array, true_label):
     thisplot[true_label].set_color('blue')
 
 
-num_rows = 5
-num_cols = 3
-num_images = num_rows * num_cols
-plt.figure(figsize=(2*2*num_cols, 2*num_rows))
-for i in range(num_images):
-    plt.subplot(num_rows, 2*num_cols, 2*i+1)
-    plot_image(i, predictions, test_labels, test_images)
-    plt.subplot(num_rows, 2*num_cols, 2*i+2)
-    plot_value_array(i, predictions, test_labels)
+plot_value_array(0, predictions_single, test_labels)
+_ = plt.xticks(range(10), class_names, rotation=45)
 plt.show()
