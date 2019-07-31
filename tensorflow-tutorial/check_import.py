@@ -29,3 +29,9 @@ print(len(train_labels))  # 60000
 
 print(test_images.shape)  # (10000, 28, 28)
 print(len(test_labels))
+
+plt.figure()
+plt.imshow(train_images[0])
+plt.colorbar()
+plt.gca().grid(False)
+plt.show()
